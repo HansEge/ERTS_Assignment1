@@ -21,9 +21,15 @@
     <ClCompile Include="ModuleSingle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ModuleDouble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ModuleSingle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleDouble.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
