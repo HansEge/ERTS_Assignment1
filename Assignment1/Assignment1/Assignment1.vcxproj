@@ -159,6 +159,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Assignment1.cpp" />
+    <ClCompile Include="ModuleSingle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ModuleSingle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
