@@ -24,12 +24,18 @@
     <ClCompile Include="Consumer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TCPHeader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Producer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Consumer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TCPHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

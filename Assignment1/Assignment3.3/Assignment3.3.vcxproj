@@ -165,10 +165,12 @@
     <ClCompile Include="Consumer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Producer.cpp" />
+    <ClCompile Include="TCPHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Consumer.h" />
     <ClInclude Include="Producer.h" />
+    <ClInclude Include="TCPHeader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
