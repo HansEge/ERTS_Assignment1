@@ -1,31 +1,4 @@
-# Directories #
-###############
-.vs
-
-# Builds #
-##########
-Debug/
-Assignment1/Debug/
-Assignment1/Assignment1/Debug/
-
-# Compiled source #
-###################
-*.com
-*.class
-*.dll
-*.exe
-*.o
-*.so
-
-# Miscellaneous #
-#################
-*.VC
-*.VC.opendb
-*.suo
-*.db
-*.ipch
-*.db-shm
-*.db-wal
+main.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
