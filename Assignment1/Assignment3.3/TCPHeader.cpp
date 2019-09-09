@@ -1,5 +1,6 @@
 #include "TCPHeader.h"
 
+// Overload of <<-operator
 ostream & operator<<(ostream & os, const TCPHeader & trans)
 {
 	os << "{" << endl << " "
@@ -10,6 +11,7 @@ ostream & operator<<(ostream & os, const TCPHeader & trans)
 	return os;
 }
 
+// Trace.
 void sc_trace(sc_trace_file *& tf, const TCPHeader & trans, std::string nm)
 {
 	sc_trace(tf, trans.Data, nm + ".Data");

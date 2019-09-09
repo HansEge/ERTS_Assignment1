@@ -8,6 +8,6 @@ int sc_main(int argc, char* argv[]) {
 	producer.out(channel);
 	Consumer consumer("consumer");
 	consumer.in(channel);
-  sc_start(100, SC_MS);
+  sc_start(500, SC_MS);
   return 0;
 }

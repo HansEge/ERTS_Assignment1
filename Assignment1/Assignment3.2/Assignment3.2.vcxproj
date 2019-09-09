@@ -163,12 +163,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ModuleDouble.h" />
-    <ClInclude Include="simple_process_ex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModuleDouble.cpp" />
-    <ClCompile Include="simple_process_ex.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

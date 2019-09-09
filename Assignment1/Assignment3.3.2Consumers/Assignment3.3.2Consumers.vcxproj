@@ -25,6 +25,7 @@
     <ClCompile Include="TCPHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Avalon_Protocol_Info.h" />
     <ClInclude Include="Consumer.h" />
     <ClInclude Include="Producer.h" />
     <ClInclude Include="TCPHeader.h" />

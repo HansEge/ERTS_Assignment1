@@ -16,11 +16,14 @@ class TCPHeader
 	char Data[DATA_SIZE];
 
 public:
+
+	// Empty constrtuctor
 	TCPHeader()
 	{
 
 	}
 
+	// Parametrized constructor
 	TCPHeader(sc_uint<16> SourcePort, sc_uint<16> DestinationPort, sc_uint<32> SequenceNumber, sc_uint<32> Acknowledge, sc_uint<16> StatusBits, sc_uint<16> WindowSize, sc_uint<16> Checksum, sc_uint<16> UrgentPointer, char Data[DATA_SIZE])
 	{
 		this->SourcePort = SourcePort;
