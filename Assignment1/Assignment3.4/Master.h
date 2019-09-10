@@ -9,35 +9,28 @@
 
 SC_MODULE(Master)
 {
+	sc_int<DATA_BITS> dataToSend;
+	bool readyState; // Used to simulate the 1 cycle delay from ready changes until master reacts to this.
+
 	sc_in_clk clk;
 
+	// Inputs
 	sc_in<bool> ready;
 
+	// Outputs
 	sc_out<bool> valid;
 	sc_out <sc_int<DATA_BITS>> data;
-	/*
 	sc_out <sc_int<ERROR_BITS>> error;
-	sc_out <sc_int<CHANNEL_BITS>> channel;*/
+	sc_out <sc_int<CHANNEL_BITS>> channel;
 
-	bool ready_state = false;
-	bool valid_state = true;
-
-	bool delay_one_cycle = true;
-
-	bool justSentData = false;
-
+	// Constructor
 	SC_CTOR(Master)
 	{
-		//SC_THREAD(MasterThread);
-
-		SC_METHOD(onReadyChanged);
-		sensitive << ready;
-
-		SC_METHOD(onClockTriggered);
+		// A single thread, , that triggers on the clock going positive.
+		SC_THREAD(MasterThread);
 		sensitive << clk.pos();
+		dont_initialize();
 	}
 
 	void MasterThread(void);
-	void onReadyChanged(void);
-	void onClockTriggered(void);
 };

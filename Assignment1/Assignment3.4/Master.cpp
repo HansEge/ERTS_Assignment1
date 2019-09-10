@@ -2,59 +2,49 @@
 
 void Master::MasterThread(void)
 {
+	//Arbitrary data to send.
+	dataToSend = 2;
+
 	while (1)
 	{
-		int a = 1;
-	}
-}
+		// Update ready state - Will not be updated until next clock cycle.
+		readyState = ready.read();
 
-void Master::onReadyChanged(void)
-{
-	ready_state = ready.read();
-	if (ready_state)
-	{
-		cout << sc_time_stamp() << "Master Ready = true." << endl;
-	}
-	else
-	{
-		cout << sc_time_stamp() << "Master Ready = false." << endl;
-	}
-}
-
-void Master::onClockTriggered(void)
-{
-	if (ready_state)
-	{
-		// Ensure one clock cycle delay.
-		if (delay_one_cycle)
+		// Check if slave is ready to receive data
+		if (readyState)
 		{
-			delay_one_cycle = false;
+			// Indicate that data is being written
+			valid.write(true);
+
+			// Write data
+			data.write(dataToSend);
+
+			//Change data
+			dataToSend *= 2;
+
+			// Set channel to 1
+			channel.write(1);
+
+			// set error to 0
+			error.write(0);
 		}
+
 		else
 		{
-			if(justSentData)
-			{
-				valid.write(false);
-				justSentData = false;
-			}
-			else
-			{
-				// Set valid to high
-				valid.write(true);
+			// Indicate that no data is being written
+			valid.write(false);
 
-				//send data
-				cout << "Master sending data" << endl;
-				sc_int<DATA_BITS> dataToSend = rand() % sc_int<DATA_BITS>(pow(2, DATA_BITS - 1)); // Random number between 0 and max-value
-				data.write(dataToSend);
+			// Write 0 to data (only to prettify in GTK-viewer).
+			data.write(0);
 
-				// To ensure delay of one clock cycle after ready.
-				delay_one_cycle = true;
-				justSentData = true;
-			}
-			
+			// Set channel to 0
+			channel.write(0);
+
+			// set error to 1
+			error.write(1);
 		}
 
-		
+		// Wait until next clock cycle.
+		wait();
 	}
 }
-

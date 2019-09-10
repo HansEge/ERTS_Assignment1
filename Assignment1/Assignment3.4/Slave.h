@@ -10,22 +10,24 @@
 SC_MODULE(Slave)
 {
 	sc_in_clk clk;
+
+	// Outputs
 	sc_out<bool> ready;
 
+	// Inputs
 	sc_in<bool> valid;
 	sc_in <sc_int<DATA_BITS>> data;
-	/*
 	sc_in <sc_int<ERROR_BITS>> error;
 	sc_in <sc_int<CHANNEL_BITS>> channel;
-	*/
-
+	
+	// Constructor
 	SC_CTOR(Slave)
 	{
-		//SC_THREAD(SlaveThread);
-		SC_METHOD(onClockTriggered);
+		// Create a single thread, that triggers on the clock going positive.
+		SC_THREAD(SlaveThread);
 		sensitive << clk.pos();
+		dont_initialize();
 	}
 
 	void SlaveThread(void);
-	void onClockTriggered(void);
 };
