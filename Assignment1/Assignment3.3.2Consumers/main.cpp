@@ -2,8 +2,8 @@
 #include "Consumer.h"
 #include "TCPHeader.h"
 int sc_main(int argc, char* argv[]) {
-	sc_fifo<TCPHeader> channel_1(10);
-	sc_fifo<TCPHeader> channel_2(10);
+	sc_fifo<TCPHeader*> channel_1(10);
+	sc_fifo<TCPHeader*> channel_2(10);
 
 	// Create producers and consumers
 	Producer producer("producer");
@@ -19,6 +19,6 @@ int sc_main(int argc, char* argv[]) {
 	consumer_2.in(channel_2);
 
 	// Simulate for 100 ms (simulation time)
-  sc_start(100, SC_MS);
+  sc_start(120, SC_MS);
   return 0;
 }

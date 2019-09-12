@@ -4,7 +4,7 @@
 
 SC_MODULE(Producer)
 {
-	sc_fifo_out <TCPHeader> out;
+	sc_fifo_out <TCPHeader*> out;
 	SC_CTOR(Producer)
 	{
 		SC_THREAD(ProducerThread);

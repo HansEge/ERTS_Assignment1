@@ -13,10 +13,10 @@ char Data[DATA_SIZE] = "Test Data";
 void Producer::ProducerThread(void)
 {
 	TCPHeader *header;
-	header = new TCPHeader(SourcePort, DestinationPort, SequenceNumber, Acknowledge, StatusBits, WindowSize, Checksum, UrgentPointer, Data);
-	while (1)
+		while (1)
 	{
-		
+			header = new TCPHeader(SourcePort, DestinationPort, SequenceNumber, Acknowledge, StatusBits, WindowSize, Checksum, UrgentPointer, Data);
+
 		
 		//Write to FIFO
 		for (int i = 0; i < out.size(); i++)
@@ -26,11 +26,10 @@ void Producer::ProducerThread(void)
 			header->setDestinationPort(i + 1);
 			cout << "Sending: " << endl << *header << endl << endl;
 			
-			out[i]->write(*header);
+			out[i]->write(header);
 		}
 		
-		// Increment sequence number.
-		header->setSequenceNumber(header->getSequenceNumber() + 1);
+		SequenceNumber++;
 	
 		// Wait for 2-10 ms.
 		int waitTime = rand() % 10 + 2;

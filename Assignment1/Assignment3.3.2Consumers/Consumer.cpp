@@ -7,6 +7,11 @@ void Consumer :: ConsumerThread(void)
 	while (1)
 	{
 		header = in.read();
-		cout << sc_time_stamp() << " - " << processName << " received TCP Package - Sequence number: " << header.getSequenceNumber() << endl << endl;
+		cout << sc_time_stamp() << " - " << processName << " received TCP Package - Sequence number: " << (*header).getSequenceNumber() << endl << endl;
+		if (strcmp(processName,"consumer_2")==0)
+		{
+			delete header;
+		}
+		
 	}
 }
