@@ -23,14 +23,24 @@ TOP::TOP(sc_module_name nm) :
 	slave->error(error);
 	slave->channel(channel);
 
-	// Connect inputs and outputs of InAdapter to signals.
+	/*// Connect inputs and outputs of InAdapter to signals.
 	master->data_out.ready(ready);
 	master->data_out.valid(valid);
 	master->data_out.clk(clock);
 	master->data_out.data(data);
 	master->data_out.error(error);
 	master->data_out.channel(channel);
-	master->data_out.reset(reset);
+	master->data_out.reset(reset);*/
+
+	master->data_out(*inAdapter);
+
+	inAdapter->data(data);
+	inAdapter->ready(ready);
+	inAdapter->valid(valid);
+	inAdapter->clk(clock);
+	inAdapter->error(error);
+	inAdapter->channel(channel);
+	inAdapter->reset(reset);
 
 	
 	//Tracefile configuration

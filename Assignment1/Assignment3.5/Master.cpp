@@ -7,7 +7,7 @@ void Master::MasterThread(void)
 	while(i<10)
 	{
 		cout << "Master writing: " << dataToSend[i] << endl;
-		data_out.write(1);
+		data_out.write(dataToSend[i]);
 		i++;
 	}
 }

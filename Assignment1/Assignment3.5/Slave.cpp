@@ -19,6 +19,10 @@ void Slave::SlaveThread(void)
 
 		// Indicate that slave is ready to receive data.
 		ready.write(false);
+
+		// Read data
+		data_read = data.read();
+		cout << "Slave received data: " << data_read << endl;
 		// Wait 3 clock cycles
 
 		ready.write(true);

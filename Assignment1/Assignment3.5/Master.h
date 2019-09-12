@@ -14,7 +14,8 @@ SC_MODULE(Master)
 	sc_int<DATA_BITS> dataToSend[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	
 	// Create output FIFO
-	InAdapter<sc_int<DATA_BITS>> data_out;
+	sc_fifo_out<sc_int<DATA_BITS>> data_out;
+	//InAdapter<sc_int<DATA_BITS>> data_out;
 
 	// Constructor
 	SC_CTOR(Master):data_out("data_out")

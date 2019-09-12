@@ -9,6 +9,8 @@
 
 SC_MODULE(Slave)
 {
+	sc_int<DATA_BITS> data_read = 0;
+
 	sc_in_clk clk;
 
 	// Outputs
