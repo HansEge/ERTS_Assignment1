@@ -10,6 +10,8 @@
 SC_MODULE(Slave)
 {
 	sc_int<DATA_BITS> data_read = 0;
+	sc_int<DATA_BITS> data_read_array[10];
+	int array_index = 0;
 
 	sc_in_clk clk;
 
@@ -30,6 +32,5 @@ SC_MODULE(Slave)
 		sensitive << clk.pos();
 		dont_initialize();
 	}
-
 	void SlaveThread(void);
 };

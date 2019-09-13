@@ -14,21 +14,25 @@ void Slave::SlaveThread(void)
 		// Wait 3 clock cycles
 		for (int i = 0; i < 3; i++)
 		{
-			wait();
+			wait(clk.posedge_event());
 		}
 
-		// Indicate that slave is ready to receive data.
-		ready.write(false);
-
-		// Read data
-		data_read = data.read();
-		cout << "Slave received data: " << data_read << endl;
-		// Wait 3 clock cycles
-
+		// Indicate that slave is ready to receive data.;
 		ready.write(true);
+
+		
+		
+		// Read data for 3 clock cycles, if any valid data.
 		for (int i = 0; i < 3; i++)
 		{
-			wait();
+			if (valid.read())
+			{
+				data_read = data.read();
+				data_read_array[array_index] = data_read;
+				array_index++;
+				cout << "Slave received data: " << data_read << endl;
+			}
+			wait(clk.posedge_event());
 		}
 	}
-}
+};

@@ -8,6 +8,6 @@ void Consumer :: ConsumerThread(void)
 		// Blocking read from FIFO
 		header = in.read();
 		// Output timestamp and info about TCP package.
-		cout << sc_time_stamp() << " - Received TCP Package - Sequence number: " << header.getSequenceNumber() << endl << endl;
+		cout << sc_time_stamp() << " - Received TCP Package - Sequence number: " << (*header).getSequenceNumber() << endl << endl;
 	}
 }

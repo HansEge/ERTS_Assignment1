@@ -35,7 +35,10 @@ public:
 				wait(clk.posedge_event());
 
 			// Wait 1 clock cycle to simulate 1 clock cycle delay.
-			wait(clk.posedge_event());
+			// wait(clk.posedge_event());
+
+			// Write "high" to valid, indicating that data is being written.
+			valid.write(true);
 
 			// Write data
 			data.write(value);
@@ -43,9 +46,6 @@ public:
 			// Write channel and error info
 			channel.write(0); // Channel number
 			error.write(0); // Error
-
-			// Write "high" to valid, indicating that data is being written.
-			valid.write(true);
 			
 			// Wait one clock cycle, then indicate that data is not being written anymore
 			wait(clk.posedge_event());
