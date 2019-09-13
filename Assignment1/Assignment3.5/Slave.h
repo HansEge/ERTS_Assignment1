@@ -9,6 +9,8 @@
 
 SC_MODULE(Slave)
 {
+	int state_counter = 0;
+
 	sc_int<DATA_BITS> data_read = 0;
 	sc_int<DATA_BITS> data_read_array[10];
 	int array_index = 0;

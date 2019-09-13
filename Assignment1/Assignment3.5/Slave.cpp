@@ -9,6 +9,29 @@ void Slave::SlaveThread(void)
 	// Simulate ready going low for 3 cycles, then high for 3 cycles, etc..
 	while (1)
 	{
+		// read new data if any valid data
+		if (valid.read())
+		{
+			data_read = data.read();
+			data_read_array[array_index] = data_read;
+			array_index++;
+			cout << "Slave received data: " << data_read << endl;
+		}
+
+		// Make sure that slave is ready for 3 cycles, then not ready for 3 cycles.
+		if (state_counter < 3)
+		{
+			ready.write(true);
+		}
+		else
+		{
+			ready.write(false);
+		}
+		state_counter++;
+		state_counter = state_counter % 6;
+
+		wait(clk.posedge_event());
+		/*
 		// Indicate that slave is not ready to receive data.
 		ready.write(false);
 		// Wait 3 clock cycles
@@ -19,8 +42,6 @@ void Slave::SlaveThread(void)
 
 		// Indicate that slave is ready to receive data.;
 		ready.write(true);
-
-		
 		
 		// Read data for 3 clock cycles, if any valid data.
 		for (int i = 0; i < 3; i++)
@@ -34,5 +55,6 @@ void Slave::SlaveThread(void)
 			}
 			wait(clk.posedge_event());
 		}
+		*/
 	}
 };
