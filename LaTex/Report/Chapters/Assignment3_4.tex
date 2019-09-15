@@ -44,7 +44,6 @@ void Master::MasterThread(void)
 			// set error to 0
 			error.write(0);
 		}
-		
 		else
 		{
 			// Indicate that no data is being written
@@ -69,57 +68,57 @@ void Master::MasterThread(void)
 The slave.cpp can be seen below. Again the comments explains how the code works. Whenever the slave has received 10 integers from the master, it begins to print those numbers to a text file. The slave also changes it's ready state every three clock cycle.  
 
 \begin{lstlisting}
-	void Slave::SlaveThread(void)
+void Slave::SlaveThread(void)
+{
+	// Initial state of "ready".
+	ready.write(false);
+	
+	// Simulate ready going low for 3 cycles, then high for 3 cycles, etc..
+	while (1)
 	{
-		// Initial state of "ready".
-		ready.write(false);
-		
-		// Simulate ready going low for 3 cycles, then high for 3 cycles, etc..
-		while (1)
+		// read new data if any valid data
+		if (valid.read())
 		{
-			// read new data if any valid data
-			if (valid.read())
+			test_data = data.read();
+			test_data_array[array_index] = test_data;
+			array_index++;
+			cout << "Slave received data: " << test_data << endl;
+			
+			// Print the first 10 numbers recieved by the slave to a text file
+			if (test_data_array[9] != 0)
 			{
-				test_data = data.read();
-				test_data_array[array_index] = test_data;
-				array_index++;
-				cout << "Slave received data: " << test_data << endl;
-				
-				// Print the first 10 numbers recieved by the slave to a text file
-				if (test_data_array[9] != 0)
+				ofstream myfile("Slave_data.txt");
+				if (myfile.is_open())
 				{
-					ofstream myfile("Slave_data.txt");
-					if (myfile.is_open())
+					for (int i = 0; i <= 9; i++)
 					{
-						for (int i = 0; i <= 9; i++)
-						{
-							myfile << test_data_array[i] << "\n";
-						}
-						
-						myfile.close();
+						myfile << test_data_array[i] << "\n";
 					}
-					else cout << "Unable to open file";
+					
+					myfile.close();
 				}
+				else cout << "Unable to open file";
 			}
-			
-			// Make sure that slave is ready for 3 cycles, then not ready for 3 cycles.
-			if (state_counter < 3)
-			{
-				ready.write(true);
-			}
-			else
-			{
-				ready.write(false);
-			}
-			state_counter++;
-			state_counter = state_counter % 6;
-			
-			wait(clk.posedge_event());
 		}
+		
+		// Make sure that slave is ready for 3 cycles, then not ready for 3 cycles.
+		if (state_counter < 3)
+		{
+			ready.write(true);
+		}
+		else
+		{
+			ready.write(false);
+		}
+		state_counter++;
+		state_counter = state_counter % 6;
+		
+		wait(clk.posedge_event());
 	}
+}
 \end{lstlisting}
 
-A trace file has been made, to ensure that the program is cycle accurate. A figure of this file can been seen below.
+In the Top.cpp file the different modules are being connected to each other using signal variables. It is also here the tracefile is made. A screenshot of the tracefile can be seen below.
 
 \begin{figure}[H]
 	\centering
