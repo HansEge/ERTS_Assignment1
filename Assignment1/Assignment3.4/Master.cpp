@@ -3,8 +3,7 @@
 void Master::MasterThread(void)
 {
 	//Arbitrary data to send.
-	dataToSend = 2;
-
+	dataToSend = 1;
 	while (1)
 	{
 		// Update ready state - Will not be updated until next clock cycle.
@@ -20,7 +19,7 @@ void Master::MasterThread(void)
 			data.write(dataToSend);
 
 			//Change data
-			dataToSend *= 2;
+			dataToSend += 1;
 
 			// Set channel to 1
 			channel.write(1);

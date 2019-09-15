@@ -19,6 +19,17 @@ SC_MODULE(Slave)
 	sc_in <sc_int<DATA_BITS>> data;
 	sc_in <sc_int<ERROR_BITS>> error;
 	sc_in <sc_int<CHANNEL_BITS>> channel;
+
+	// Used for printing to .txt
+	int state_counter = 0;
+	int array_index = 0;
+	sc_int<16> test_data = 0;
+	sc_int<16> test_data_array[10] = { 0 };
+
+	/*
+	sc_in <sc_int<DATA_BITS>> data_read_array[10];
+	sc_in <sc_int<DATA_BITS>> data_read;
+	*/
 	
 	// Constructor
 	SC_CTOR(Slave)
