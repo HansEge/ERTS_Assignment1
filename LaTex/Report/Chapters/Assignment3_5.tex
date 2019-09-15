@@ -8,7 +8,7 @@ and OutAdapter.h). Here a master sends data to a slave using a sc\_fifo and an a
 converts to the bus cycle accurate interface on the receiving slave. Use the model from exercise
 3.4 for the interface at the Avalon-ST sink interface for the slave as illustrated below}
 
-
+\section{Master.cpp}
 In this exercise the master sends 10 integers to the slave. The code for the master can be seen below.
 \begin{lstlisting}
 void Master::MasterThread(void)
@@ -24,6 +24,8 @@ void Master::MasterThread(void)
 }
 \end{lstlisting}
 
+
+\section{Slave.cpp}
 The slave behaves almost as in exercise 3.4 but without the ability to write to a text file. The code for the slave can be seen below.
 
 \begin{lstlisting}
@@ -62,6 +64,7 @@ void Slave::SlaveThread(void)
 \end{lstlisting}
 
 
+\section{Top.cpp}
 The Top.cpp files show how the adaptor is in between the master and slave. On the figure below the code show how this is done.
 
 
@@ -111,7 +114,7 @@ clock("clock", sc_time(20, SC_NS))
 }
 \end{lstlisting}
 
-
+\section{InAdaptor.cpp}
 The adaptor makes sure that you get a cycle accurate model when using TLM style communication, like the sc\_fifo. The code for the adaptor can be seen below.
 
 \begin{lstlisting}

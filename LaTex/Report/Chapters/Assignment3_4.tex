@@ -15,7 +15,7 @@ A total of of three .h files and 4 .cpp files have been made in this exercise. A
 The code below shows the Master.cpp code. The comments explain how the code works, but the essence of it is just to send an integer(1) and afterwards increment that integer for the next send cycle. That means the master will send the numbers 1...10. The master and slave are setup to use the Avalon Streaming Bus interface. The data transfer uses backpressure with a ready latency set to 1.  
 
 
-
+\section{Master.cpp}
 \begin{lstlisting}
 void Master::MasterThread(void)
 {
@@ -65,6 +65,7 @@ void Master::MasterThread(void)
 }
 \end{lstlisting}
 
+\section{Slave.cpp}
 The slave.cpp can be seen below. Again the comments explains how the code works. Whenever the slave has received 10 integers from the master, it begins to print those numbers to a text file. The slave also changes it's ready state every three clock cycle.  
 
 \begin{lstlisting}
@@ -127,4 +128,4 @@ In the Top.cpp file the different modules are being connected to each other usin
 	\label{fig:GTK_Viewer}
 \end{figure}
 
-According to the figure above we can confirm that the protocol is acting as it should.
+According to the figure above we can confirm that the protocol is acting as it should and the model is cycle accurate.
