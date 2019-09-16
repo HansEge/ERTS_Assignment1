@@ -15,7 +15,7 @@ For this problem two modules are implemented; a Consumer and a Producer module.
 A code snippet of the Costumer module is snippet below. 
 The consumer module implements sc\_fifo\_in of the type <TCPHeader> because its supposed to read from the FIFO.
 
-\section{Consumer.h}
+\subsection{Consumer.h}
 \begin{lstlisting}
 #pragma once
 #include <systemc.h>
@@ -35,7 +35,7 @@ void ConsumerThread(void);
 \end{lstlisting}
 
 
-\section{Producer.h}
+\subsection{Producer.h}
 The same goes for the Producer module just vise versa it implements sc\_fifo\_out of the type <TCPHeader> because it’s supposed to write to the FIFO. The code snippet of the Producer module header file is pictured below.
 \begin{lstlisting}
 #pragma once
@@ -58,7 +58,7 @@ void ProducerThread(void);
 
 
 
-\section{TCPHeader.h}
+\subsection{TCPHeader.h}
 In the header file for TCPheader the code snippet from the exercise was used as a template for the structure of the TCPheader. The implementation can be seen below. Comments in the code explain the implementation.
 
 \begin{lstlisting}
@@ -151,7 +151,7 @@ friend void sc_trace(sc_trace_file*& tf, const TCPHeader& trans, std::string nm)
 \end{lstlisting}
 
 
-\section{Producer.cpp}
+\subsection{Producer.cpp}
 
 If we look at the source file for the Producer which is pictured below. 
 It generates a new TCPHeader called header, and write information about the package to the console, before writing the package to the FIFO. Then the sequence number is incremented before it waits for a random amount of time (between 2ms and 10ms). 
@@ -194,7 +194,7 @@ wait(waitTime, SC_MS);
 
 
 
-\section{Consumer.cpp}
+\subsection{Consumer.cpp}
 The consumer just reads from the FIFO, and writes out the sequence number on the received package to the console. 
 \begin{lstlisting}
 #include "Consumer.h"
@@ -209,13 +209,13 @@ header = in.read();
 // Output timestamp and info about TCP package.
 cout << sc_time_stamp() << " - Received TCP Package - Sequence number: " << (*header).getSequenceNumber() << endl << endl;
 }
-}
+}$ 	 $
 \end{lstlisting}
 
 
 
 Below is a picture of the simulated result for the console. 
-It matches the expected result. The sequence numbers match and the packages is being send in a random interval between 2ms and 10ms. 
+It matches the expected result. The sequence numbers match and the packages are being send in a random interval between 2ms and 10ms. 
 
 
 \begin{figure}[H]
@@ -226,6 +226,125 @@ It matches the expected result. The sequence numbers match and the packages is b
 \end{figure}
 
 
+\section{Assignment 3.3.2}
+
+\textbf{The producer must be rewritten to connect to more ports. As illustrated below:}
+	
+\begin{lstlisting}
+sc_port<sc_fifo_out_if<TCPHeader *>,0> out;
+\end{lstlisting}
+	
+\textbf{Further, the producer code must be rewritten to send the TCP packet to all connected fifo channels as
+shown below:}
+
+\begin{lstlisting}	
+for (int i = 0; i < out.size(); i++)
+{
+out[i]->write(package);
+}
+\end{lstlisting}
+
+In this exercise its only the header file for the Producer and the two source files for Producer and Consumer that has changes the rest is identical to the previous exercise. 
+
+\subsection{Producer.h}
+If we look at the Producer.h. The only thing that has changed is line 7, it is now possible for the producer to connect to five ports.
+
+\begin{lstlisting}
+#pragma once
+#include <systemc.h>
+#include "TCPHeader.h"
+
+SC_MODULE(Producer)
+{
+sc_port<sc_fifo_out_if<TCPHeader*>, 5> out;
+SC_CTOR(Producer)
+{
+SC_THREAD(ProducerThread);
+}
+
+void ProducerThread(void);
+};
+\end{lstlisting}
+
+
+
+\subsection{Producer.cpp}
+The Producer.cpp hasn't changed mush either. Its now running a for-loop to make sure it writes to all its connected ports. 
+\begin{lstlisting}
+#include "Producer.h"
+
+sc_uint<16> SourcePort =  1;
+sc_uint<16> DestinationPort = 2;
+sc_uint<32> SequenceNumber = 1;
+sc_uint<32> Acknowledge = 4;
+sc_uint<16> StatusBits = 5;
+sc_uint<16> WindowSize = 6;
+sc_uint<16> Checksum = 7;
+sc_uint<16> UrgentPointer = 8;
+char Data[DATA_SIZE] = "Test Data";
+
+void Producer::ProducerThread(void)
+{
+TCPHeader *header;
+while (1)
+{
+header = new TCPHeader(SourcePort, DestinationPort, SequenceNumber, Acknowledge, StatusBits, WindowSize, Checksum, UrgentPointer, Data);
+
+
+//Write to FIFO
+for (int i = 0; i < out.size(); i++)
+{
+// Generate new TCP header.
+cout << sc_time_stamp() << ": Producing" << endl;
+header->setDestinationPort(i + 1);
+cout << "Sending: " << endl << *header << endl << endl;
+
+out[i]->write(header);
+}
+
+SequenceNumber++;
+
+// Wait for 2-10 ms.
+int waitTime = rand() % 10 + 2;
+wait(waitTime, SC_MS);
+}
+}
+\end{lstlisting}
+
+
+
+\subsection{Consumer.cpp}
+Again the Consumer.cpp hasn't changed mush either. The main difference is the consumer now has to keep track of the process which is done in line 7.
+\begin{lstlisting}
+#include "Consumer.h"
+#include "TCPHeader.h"
+
+void Consumer :: ConsumerThread(void)
+{
+//To get the current process name
+const char* processName = sc_core::sc_get_current_process_b()->get_parent()->basename();
+while (1)
+{
+header = in.read();
+cout << sc_time_stamp() << " - " << processName << " received TCP Package - Sequence number: " << (*header).getSequenceNumber() << endl << endl;
+if (strcmp(processName,"consumer_2")==0)
+{
+delete header;
+}
+
+}
+}
+\end{lstlisting}
+
+In main.cpp two FIFO channels, one producer and two consumers where created and the simulation time was 120ms. Below is a picture of the simulation result from the console window to show the producer sends data to both consumers. 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Images/ConsoleWindow3_3_2.png}
+	\caption{A screenshot of the console}
+	\label{fig:ConsoleWindow_3_3_2}
+\end{figure}
 
 
 
