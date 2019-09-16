@@ -48,6 +48,7 @@ public:
 	}
 
 	// Overload of '='-operator.
+	// Required for use with the sc_fifo<> and sc_signal<>.
 	// Creates a new instance with matching attributes.
 	TCPHeader& operator=(
 		const TCPHeader& rhs
@@ -65,6 +66,7 @@ public:
 		return *this;
 	}
 	// Overload of '=='-operator.
+	// Required for use with the sc_fifo<> and sc_signal<>.
 	// Checks if all values are the same, in which case true is returned. Otherwise false is returned.
 	bool operator==(const TCPHeader& rhs)
 		const {
