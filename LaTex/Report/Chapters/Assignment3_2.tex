@@ -54,7 +54,7 @@ The implementation of Thread\_A and Thread\_B is showed in the code snippet belo
 Thread\_A notifies event A every 3ms, or when event Aack is notified. 
 Thread\_B notifies event B every 2ms, or when even Back is notified. 
  
-Method\_A must print out the simulation time and the event notified. To check which event that triggered Method\_A an if-statement is implemented. The if -statement checks a Boolean called next\_trigger\_from\_A. If that Boolean is true, the Event Aack is notified, and the call next\_trigger(B) is used, to change the dynamic sensitivity of the process, so its triggered next time event B is notified. 
+Method\_A must print out the simulation time and the event notified. To check which event that triggered Method\_A an if-statement is implemented. The if -statement checks a Boolean called next\_trigger\_from\_A. If that Boolean is true, the Event Aack is notified, and the call next\_trigger(B) is used, to change the dynamic sensitivity of the process, so next time its triggered event B is notified. 
 
 \begin{lstlisting}
 #include "ModuleDouble.h"
