@@ -91,6 +91,7 @@ clock("clock", sc_time(20, SC_NS))
 	// Connect master to fifo.
 	master->data_out(*inAdapter);
 	
+	// Connect adaptor to slave
 	inAdapter->data(data);
 	inAdapter->ready(ready);
 	inAdapter->valid(valid);

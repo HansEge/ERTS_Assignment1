@@ -12,8 +12,8 @@
 }
 
 For this problem two modules are implemented; a Consumer and a Producer module. 
-A code snippet of the Costumer module is snippet below. 
-The consumer module implements sc\_fifo\_in of the type <TCPHeader> because its supposed to read from the FIFO.
+A code snippet of the Costumer module is shown below. 
+The consumer module implements sc\_fifo\_in of the type <TCPHeader*> because its supposed to read from the FIFO.
 
 \subsection{Consumer.h}
 \begin{lstlisting}
@@ -36,7 +36,7 @@ void ConsumerThread(void);
 
 
 \subsection{Producer.h}
-The same goes for the Producer module just vise versa it implements sc\_fifo\_out of the type <TCPHeader> because it’s supposed to write to the FIFO. The code snippet of the Producer module header file is pictured below.
+The same goes for the Producer module just vise versa it implements sc\_fifo\_out of the type <TCPHeader*> because it’s supposed to write to the FIFO. The code snippet of the Producer module header file is pictured below.
 \begin{lstlisting}
 #pragma once
 #include <systemc.h>
